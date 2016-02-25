@@ -18,7 +18,7 @@ module.exports = function (app) {
               period: 'm'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only) 
             }, function (err, quotes) {
               if (err) {
-                  res.json({ "error": "No data found" });
+                  res.status(500).send('Not found!');
               } else {
                   res.json(quotes);
               }
