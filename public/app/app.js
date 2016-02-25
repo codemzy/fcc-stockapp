@@ -2,14 +2,22 @@
 
 angular.module('StocksRockApp', [])
 
-    .controller('index', function($scope) {
+    .controller('index', ['$scope', 'stock', function($scope, stock) {
      $scope.stocks = [{ title: "Test 1"}, { title: "Test 2"}];
      $scope.socket = io();
 
      // ADD STOCK FUNCTION
      $scope.addStock = function() {
-         var stock = $scope.newStock;
-         $scope.socket.emit('messages', stock);
+         var newStock = $scope.newStock;
+         stock.addStock(newStock).success(function(data) {
+             $scope.stockName = data.name;
+             $scope.stockData = data.historic;
+             $scope.socket.emit('messages', newStock);
+         });
+         stock.addStock(newStock).error(function(error) {
+             $scope.stockName = error;
+             $scope.stockData = error;
+         });
      };
      // DO SOMETHING WHEN DATA EMITTED FROM SERVER
      $scope.socket.on('messages', function (data) {
@@ -18,4 +26,4 @@ angular.module('StocksRockApp', [])
             $scope.stocks.push({ title: data });
         });
      });
-    });
+    }]);
