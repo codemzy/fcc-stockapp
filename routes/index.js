@@ -1,11 +1,24 @@
 var yahooFinance = require('yahoo-finance');
 
-module.exports = function (app) {
+module.exports = function (app, db) {
     
     // homepage
     app.route('/')
         .get(function (req, res) {
     		res.sendFile(process.cwd() + '/public/app/index.html');
+        });
+    
+    // api to get stock data based on stocks saved in the db
+    app.route('/api/stockdata')
+        .get(function (req, res) {
+            db.collection('stock').find({}, {"_id": 0, "symbol": 1, "name": 1}).toArray(function(err, stocks) {
+                if (err) {
+                    res.status(500).send('Not found!');
+                } else {
+                    // respond with all stocks names and data
+                    res.json(stocks);
+                }
+            });
         });
     
     // api to add new stock and get stock data
