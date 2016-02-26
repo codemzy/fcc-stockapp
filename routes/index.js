@@ -8,7 +8,7 @@ module.exports = function (app, db) {
     		res.sendFile(process.cwd() + '/public/app/index.html');
         });
     
-    // api to get stock data based on stocks saved in the db
+    // api to get stock names based on stocks saved in the db
     app.route('/api/stock/names')
         .get(function (req, res) {
             db.collection('stock').find({}, {"_id": 0, "symbol": 1, "name": 1}).toArray(function(err, stocks) {
