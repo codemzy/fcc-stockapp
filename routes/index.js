@@ -9,7 +9,7 @@ module.exports = function (app, db) {
         });
     
     // api to get stock data based on stocks saved in the db
-    app.route('/api/stockdata')
+    app.route('/api/stock/names')
         .get(function (req, res) {
             db.collection('stock').find({}, {"_id": 0, "symbol": 1, "name": 1}).toArray(function(err, stocks) {
                 if (err) {
@@ -22,7 +22,7 @@ module.exports = function (app, db) {
         });
     
     // api to add new stock and get stock data
-    app.route('/api/stocks/:id')
+    app.route('/api/stock/new/:id')
         .get(function (req, res) {
             var stockName = req.params.id;
             
