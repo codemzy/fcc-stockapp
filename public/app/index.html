@@ -20,8 +20,8 @@
     {{ stockName }}
     {{ stockData }}
     
-    <div class="col-md-4">
-      <div class="well text-center">
+    <div class="col-md-4 text-center">
+      <div class="well">
         <form>
             <div class="form-group">
               <input ng-model="newStock" name="new-stock" type="text" class="form-control" placeholder="Stock code...">
@@ -32,11 +32,23 @@
     </div>
     
     
+    <div ng-if="help" class="col-md-12">
+      <div class="alert alert-dismissible alert-danger">
+        <button type="button" ng-click="closeHelp()" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+          {{help}}
+      </div>
+    </div>
+    
+    
     </div>
     
     <!-- Scripts -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     
     <!-- Modules -->
     <script src="/public/app/app.js"></script>

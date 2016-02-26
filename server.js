@@ -18,7 +18,7 @@ io.on('connection', function(client) {
   // listen for messages events
   client.on('messages', function(data){
       // broadcast to other connected users
-      client.broadcast.emit("messages", data);
+      client.broadcast.emit('messages', data);
       // also emit to current client
       client.emit('messages', data);
   });
