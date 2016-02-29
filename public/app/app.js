@@ -124,6 +124,8 @@ angular.module('StocksRockApp', [])
                 for (var i = 0; i < $scope.stocks.length; i++) {
                     if ($scope.stocks[i].symbol == data.symbol) {
                         $scope.stocks.splice(i, 1);
+                        chartData.datasets.splice(i, 1);
+                        stocksRockChart = new Chart(ctx).Line(chartData, options);
                     }
                 }
             });
@@ -142,7 +144,7 @@ angular.module('StocksRockApp', [])
             animationEasing: "linear",
             showScale: true,
             scaleOverride: false,
-            scaleLineColor: "rgba(0,0,0,.1)",
+            scaleLineColor: "rgba(255,255,255,.25)",
             scaleLineWidth: 1,
             scaleShowLabels: true,
             scaleLabel: "<%=value%>",
@@ -151,9 +153,9 @@ angular.module('StocksRockApp', [])
             scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
             scaleFontSize: 12,
             scaleFontStyle: "normal",
-            scaleFontColor: "#666",
+            scaleFontColor: "#fff",
             scaleShowGridLines : true,
-            scaleGridLineColor : "rgba(0,0,0,.05)",
+            scaleGridLineColor : "rgba(255,255,255,.25)",
             scaleGridLineWidth : 1,
             scaleShowHorizontalLines: true,
             scaleShowVerticalLines: true,

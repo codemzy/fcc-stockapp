@@ -8,42 +8,43 @@
 
 <body ng-app="StocksRockApp">
     <div ng-controller="index">
-    <h1>Hello World</h1>
+      
+    <div class="col-md-12 text-center">
+    <h1><img src="/public/img/rock.png" /> Stocks Rock</h1>
+    </div>
     
     <div class="col-md-12">
       <canvas id="stockChart" width="800px" height="500px"></canvas>
       <div id="stockChart-legend" class="chart-legend text-center"></div>
     </div>
     
-    <div class="col-md-4" ng-repeat="stock in stocks">
+    <div class="col-md-12 text-center">
+        <div ng-if="help">
+          <div class="alert alert-dismissible alert-danger">
+            <button type="button" ng-click="closeHelp()" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
+              {{help}}
+          </div>
+        </div>
+        <form>
+            <div class="form-group">
+              <label class="control-label">Add stocks and update chart:</label>
+              <div class="input-group">
+                <input ng-model="newStockSymbol" name="new-stock" type="text" class="form-control" placeholder="Stock code...">
+                <span class="input-group-btn">
+                  <input type="submit" ng-click="addStock()" id="submitStock" class="btn btn-block btn-add" value="Add" />
+                </span>
+              </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="col-md-3" ng-repeat="stock in stocks">
       <div class="well text-center">
         <button type="button" ng-click="deleteRequest(stock.symbol)" class="close"><i class="fa fa-times"></i></button><br>
         <h3>{{ stock.symbol }}</h3>
         <p>{{ stock.name }}</p>
         <div ng-if="stock.delete"><small>Are you sure you want to delete this stock?</small>
         <button ng-click="deleteCancel(stock.symbol)" class="btn btn-warning btn-xs">Keep</button><button ng-click="deleteConfirm(stock.symbol)" class="btn btn-danger btn-xs">Delete</a></div>
-      </div>
-    </div>
-
-
-    {{ stocks }}
-    
-    <div class="col-md-4 text-center">
-      <div class="well">
-        <form>
-            <div class="form-group">
-              <input ng-model="newStockSymbol" name="new-stock" type="text" class="form-control" placeholder="Stock code...">
-            </div>
-            <input type="submit" ng-click="addStock()" id="submitStock" class="btn btn-block btn-primary" value="Add" />
-        </form>
-      </div>
-    </div>
-    
-    
-    <div ng-if="help" class="col-md-12">
-      <div class="alert alert-dismissible alert-danger">
-        <button type="button" ng-click="closeHelp()" class="close" data-dismiss="alert"><i class="fa fa-times"></i></button>
-          {{help}}
       </div>
     </div>
     

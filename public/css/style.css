@@ -1,11 +1,25 @@
 body {
-    background-color: #F2F1EF;
+    background-color: #6C7A89;
+    color: #fff;
+}
+
+.well {
+    color: #6C7A89;
 }
 
 #stockChart {
     padding-right: 40px;
     padding-left: 10px;
     max-height: 500px;
+}
+
+.btn-add {
+    background-color: #D35400;
+}
+
+.btn-add:hover {
+    background-color: #F9690E;
+    color: #ffffff;
 }
 
 .btn-xs {
