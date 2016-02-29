@@ -11,12 +11,28 @@ module.exports = function (app, db) {
     // api to get stock names based on stocks saved in the db
     app.route('/api/stock/names')
         .get(function (req, res) {
+            // get stocks names
             db.collection('stock').find({}, {"_id": 0, "symbol": 1, "name": 1}).toArray(function(err, stocks) {
                 if (err) {
                     res.status(500).send('Not found!');
                 } else {
-                    // respond with all stocks names and data
-                    res.json(stocks);
+                    // get stocks data
+                    var symbols = stocks.map(function(item) {
+                        return item.symbol;
+                    });
+                    yahooFinance.historical({
+                        symbols: symbols,
+                        from: '2012-01-01',
+                        to: '2012-12-31',
+                        period: 'm'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only)
+                    }, function (err, result) {
+                          if (err) {
+                              res.status(500).send('Not found!');
+                          } else {
+                              // respond with stock name and data info
+                              res.json({ name: stocks, data: result });
+                          }
+                    });
                 }
             });
         });
