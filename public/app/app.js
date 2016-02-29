@@ -26,7 +26,7 @@ angular.module('StocksRockApp', [])
              var arrData = [];
              var dataLength = data.data[key].length;
              for (var i = 0; i < dataLength; i++) {
-                 arrData.push(parseInt(data.data[key][i].close, 10));
+                 arrData.push(data.data[key][i].close);
              }
              var obj = {
                 label: data.data[key][0].symbol,
@@ -69,6 +69,26 @@ angular.module('StocksRockApp', [])
             $scope.$apply(function() {
                 $scope.stocks.push({ symbol: data.symbol, name: data.name });
                 $scope.stockData[data.symbol] = data.data;
+                // update the chart
+                var colour = randomColor();
+                var arrData = [];
+                var dataLength = data.data.length;
+                for (var i = 0; i < dataLength; i++) {
+                    arrData.push(data.data[i].close);
+                }
+                var obj = {
+                    label: data.data[0].symbol,
+                    fillColor: "rgba(" + colour + ",0.2)",
+                    strokeColor: "rgba(" + colour + ",1)",
+                    pointColor: "rgba(" + colour + ",1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    data: arrData
+                };
+                console.log("trying to update");
+                console.log(obj);
+                chartData.datasets.push(obj);
+                stocksRockChart = new Chart(ctx).Line(chartData, options);
             });
         });
         // RANDOM COLOR GENERATOR
