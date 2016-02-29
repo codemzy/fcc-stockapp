@@ -20,5 +20,15 @@ angular.module('StocksRockApp')
                 return err;
               });
   };
+  // delete stock items from db
+  this.deleteStock = function(stock) {
+    return $http.get('/api/stock/delete/' + stock)
+              .success(function(data) {
+                return stock;
+              })
+              .error(function(err) {
+                return err;
+              });
+  };
   return this;
 }]);

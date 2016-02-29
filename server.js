@@ -22,6 +22,13 @@ io.on('connection', function(client) {
       // also emit to current client
       client.emit('messages', data);
   });
+  // listen for delete messages
+  client.on('deletedstock', function(data){
+      // broadcast to other connected users
+      client.broadcast.emit('deletedstock', data);
+      // also emit to current client
+      client.emit('deletedstock', data);
+  });
 });
 
 mongo.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/stocks', function (error, db) {

@@ -17,19 +17,22 @@
     
     <div class="col-md-4" ng-repeat="stock in stocks">
       <div class="well text-center">
+        <button type="button" ng-click="deleteRequest(stock.symbol)" class="close"><i class="fa fa-times"></i></button><br>
         <h3>{{ stock.symbol }}</h3>
         <p>{{ stock.name }}</p>
+        <div ng-if="stock.delete"><small>Are you sure you want to delete this stock?</small>
+        <button ng-click="deleteCancel(stock.symbol)" class="btn btn-warning btn-xs">Keep</button><button ng-click="deleteConfirm(stock.symbol)" class="btn btn-danger btn-xs">Delete</a></div>
       </div>
     </div>
 
 
-    {{ stockData }}
+    {{ stocks }}
     
     <div class="col-md-4 text-center">
       <div class="well">
         <form>
             <div class="form-group">
-              <input ng-model="newStock" name="new-stock" type="text" class="form-control" placeholder="Stock code...">
+              <input ng-model="newStockSymbol" name="new-stock" type="text" class="form-control" placeholder="Stock code...">
             </div>
             <input type="submit" ng-click="addStock()" id="submitStock" class="btn btn-block btn-primary" value="Add" />
         </form>

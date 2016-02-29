@@ -41,40 +41,43 @@ module.exports = function (app, db) {
     app.route('/api/stock/new/:id')
         .get(function (req, res) {
             var stockName = req.params.id;
-            
-        // get the snapshot for the name         
-        yahooFinance.snapshot({
-          symbol: stockName,
-          fields: ['s', 'n']  // ex: ['s', 'n', 'd1', 'l1', 'y', 'r'] 
-        }, function (err, snapshot) {
-            if (err) {
-                res.status(500).send('Not found!');
-            } else if (!snapshot.name) {
-                res.status(500).send('Not found!');
-            } else {
-                // get the historic data for the year
-                yahooFinance.historical({
-                  symbol: stockName,
-                  from: '2012-01-01',
-                  to: '2012-12-31',
-                  period: 'm'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only) 
-                }, function (err, quotes) {
-                  if (err) {
-                      res.status(500).send('Not found!');
-                  } else {
-                      // add the stock name to the database using update and upsert to avoid duplicates on refresh
-                      db.collection('stock').update({ symbol: snapshot.symbol }, { symbol: snapshot.symbol, name: snapshot.name }, { upsert: true });
-                      // respond with the data
-                      res.json({ name: snapshot, historic: quotes });
-                  }
-                });
-                
-            }
-        });
-            
-            
+            // get the snapshot for the name         
+            yahooFinance.snapshot({
+              symbol: stockName,
+              fields: ['s', 'n']  // ex: ['s', 'n', 'd1', 'l1', 'y', 'r'] 
+            }, function (err, snapshot) {
+                if (err) {
+                    res.status(500).send('Not found!');
+                } else if (!snapshot.name) {
+                    res.status(500).send('Not found!');
+                } else {
+                    // get the historic data for the year
+                    yahooFinance.historical({
+                      symbol: stockName,
+                      from: '2012-01-01',
+                      to: '2012-12-31',
+                      period: 'm'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only) 
+                    }, function (err, quotes) {
+                      if (err) {
+                          res.status(500).send('Not found!');
+                      } else {
+                          // add the stock name to the database using update and upsert to avoid duplicates on refresh
+                          db.collection('stock').update({ symbol: snapshot.symbol }, { symbol: snapshot.symbol, name: snapshot.name }, { upsert: true });
+                          // respond with the data
+                          res.json({ name: snapshot, historic: quotes });
+                      }
+                    });
+                    
+                }
+            });
         });
         
-    // next route
+    // api to delete stock names from the database
+    app.route('/api/stock/delete/:id')
+        .get(function (req, res) {
+            var stockName = req.params.id;
+            db.collection('stock').remove({ symbol: stockName });
+            res.json({ confirm: "Deleted from database"});
+        });
     
 };

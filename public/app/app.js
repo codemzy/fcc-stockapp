@@ -44,9 +44,17 @@ angular.module('StocksRockApp', [])
         });
         // ADD STOCK FUNCTION
         $scope.addStock = function() {
-         var newStock = $scope.newStock.toUpperCase();
-         var length = $scope.stocks.length;
+        // check if blank
+         if (!$scope.newStockSymbol) {
+            $scope.help = "Cannot submit blank stock item";
+            return;
+         }
+         // assign the newStock symbol
+         var newStock = $scope.newStockSymbol.toUpperCase();
+         // clear the scope to avoid duplciates
+         $scope.newStockSymbol = "";
          // check if stock symbol already exists
+         var length = $scope.stocks.length;
          for (var i = 0; i < length; i++) {
              if (newStock == $scope.stocks[i].symbol) {
                  $scope.help = "This stock symbol already exists";
@@ -64,7 +72,7 @@ angular.module('StocksRockApp', [])
              $scope.stockData = error;
          });
         };
-        // DO SOMETHING WHEN DATA EMITTED FROM SERVER
+        // DO SOMETHING WHEN DATA ADD EMITTED FROM SERVER
         $scope.socket.on('messages', function (data) {
             $scope.$apply(function() {
                 $scope.stocks.push({ symbol: data.symbol, name: data.name });
@@ -85,10 +93,39 @@ angular.module('StocksRockApp', [])
                     pointHighlightFill: "#fff",
                     data: arrData
                 };
-                console.log("trying to update");
-                console.log(obj);
                 chartData.datasets.push(obj);
                 stocksRockChart = new Chart(ctx).Line(chartData, options);
+            });
+        });
+        // DELETE STOCK FUNCTION
+        $scope.deleteRequest = function(symbol) {
+                for (var i = 0; i < $scope.stocks.length; i++) {
+                    if ($scope.stocks[i].symbol == symbol) {
+                        $scope.stocks[i].delete = true;
+                    }
+                }
+        };
+        $scope.deleteCancel = function(symbol) {
+                for (var i = 0; i < $scope.stocks.length; i++) {
+                    if ($scope.stocks[i].symbol == symbol) {
+                        $scope.stocks[i].delete = false;
+                    }
+                }
+        };
+        $scope.deleteConfirm = function(symbol) {
+                console.log(symbol);
+                stock.deleteStock(symbol).success(function(data) {
+                    $scope.socket.emit('deletedstock', { symbol: symbol });
+                });
+        };
+        // DO SOMETHING WHEN DATA REMOVE EMITTED FROM SERVER
+        $scope.socket.on('deletedstock', function (data) {
+            $scope.$apply(function() {
+                for (var i = 0; i < $scope.stocks.length; i++) {
+                    if ($scope.stocks[i].symbol == data.symbol) {
+                        $scope.stocks.splice(i, 1);
+                    }
+                }
             });
         });
         // RANDOM COLOR GENERATOR
