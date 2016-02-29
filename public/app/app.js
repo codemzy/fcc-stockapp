@@ -16,6 +16,8 @@ angular.module('StocksRockApp', [])
             labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
             datasets: []
         };
+        var ctx = document.getElementById("stockChart").getContext("2d");
+        var stocksRockChart = new Chart(ctx).Line(chartData, options);
         // GET NAMES OF STOCKS IN DB
         stock.getStock().success(function(data) {
          $scope.stocks = data.name;
@@ -38,8 +40,7 @@ angular.module('StocksRockApp', [])
              $scope.stockData.push(obj);
              chartData.datasets.push(obj);
          }
-        var ctx = document.getElementById("stockChart").getContext("2d");
-        var stocksRockChart = new Chart(ctx).Line(chartData, options);
+        stocksRockChart = new Chart(ctx).Line(chartData, options);
         });
         // ADD STOCK FUNCTION
         $scope.addStock = function() {
@@ -72,9 +73,9 @@ angular.module('StocksRockApp', [])
         });
         // RANDOM COLOR GENERATOR
         var randomColor = function() {
-            var red = Math.floor(((Math.random()*256) + 255) / 2);
-            var green = Math.floor(((Math.random()*256) + 255) / 2);
-            var blue = Math.floor(((Math.random()*256) + 255) / 2);
+            var red = Math.floor(((Math.random()*256) + 230) / 2);
+            var green = Math.floor(((Math.random()*256) + 126) / 2);
+            var blue = Math.floor(((Math.random()*256) + 34) / 2);
             return red + "," + green + "," + blue;
         };
         // CHART OPTIONS
