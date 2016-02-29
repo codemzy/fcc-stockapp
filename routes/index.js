@@ -62,8 +62,8 @@ module.exports = function (app, db) {
                   if (err) {
                       res.status(500).send('Not found!');
                   } else {
-                      // TO DO add the stock name to the database
-                      
+                      // add the stock name to the database using update and upsert to avoid duplicates on refresh
+                      db.collection('stock').update({ symbol: snapshot.symbol }, { symbol: snapshot.symbol, name: snapshot.name }, { upsert: true });
                       // respond with the data
                       res.json({ name: snapshot, historic: quotes });
                   }

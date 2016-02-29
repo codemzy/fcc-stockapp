@@ -100,6 +100,9 @@ angular.module('StocksRockApp', [])
         };
         // CHART OPTIONS
         var options = {
+            animation: true,
+            animationSteps: 50,
+            animationEasing: "linear",
             showScale: true,
             scaleOverride: false,
             scaleLineColor: "rgba(0,0,0,.1)",
