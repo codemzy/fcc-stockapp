@@ -16,14 +16,18 @@ module.exports = function (app, db) {
                 if (err) {
                     res.status(500).send('Not found!');
                 } else {
+                    // get the date range
+                    var today = new Date;
+                    var months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+                    var month = months[today.getMonth()];
                     // get stocks data
                     var symbols = stocks.map(function(item) {
                         return item.symbol;
                     });
                     yahooFinance.historical({
                         symbols: symbols,
-                        from: '2012-01-01',
-                        to: '2012-12-31',
+                        from: (today.getFullYear()-1) + "-" + month + "-" + today.getDate(),
+                        to: today.getFullYear() + "-" + month + "-" + today.getDate(),
                         period: 'm'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only)
                     }, function (err, result) {
                           if (err) {
@@ -51,11 +55,15 @@ module.exports = function (app, db) {
                 } else if (!snapshot.name) {
                     res.status(500).send('Not found!');
                 } else {
+                    // get the date range
+                    var today = new Date;
+                    var months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+                    var month = months[today.getMonth()];
                     // get the historic data for the year
                     yahooFinance.historical({
                       symbol: stockName,
-                      from: '2012-01-01',
-                      to: '2012-12-31',
+                      from: (today.getFullYear()-1) + "-" + month + "-" + today.getDate(),
+                      to: today.getFullYear() + "-" + month + "-" + today.getDate(),
                       period: 'm'  // 'd' (daily), 'w' (weekly), 'm' (monthly), 'v' (dividends only) 
                     }, function (err, quotes) {
                       if (err) {
