@@ -12,8 +12,13 @@ angular.module('StocksRockApp', [])
             $scope.help = false;
         };
         // SET UP THE THE CHART
+        // get the date range
+        var today = new Date;
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var month = months[today.getMonth()];
+        // add the labels
         var chartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            labels: [months[today.getMonth()+1], months[today.getMonth()+2], months[today.getMonth()+3], months[today.getMonth()+4], months[today.getMonth()+5], months[today.getMonth()+6], months[today.getMonth()+7], months[today.getMonth()+8], months[today.getMonth()+9], months[today.getMonth()+10], months[today.getMonth()+11], months[today.getMonth()]],
             datasets: []
         };
         var ctx = document.getElementById("stockChart").getContext("2d");
