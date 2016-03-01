@@ -13,7 +13,7 @@
     <h1><img src="/public/img/rock.png" /> Stock Rock</h1>
     </div>
     
-    <div class="col-md-12">
+    <div class="col-md-12 chart-wrap">
       <canvas id="stockChart" width="800px" height="500px"></canvas>
       <div id="stockChart-legend" class="chart-legend text-center"></div>
     </div>
@@ -45,6 +45,21 @@
         <div ng-if="stock.delete"><small>Are you sure you want to delete this stock?</small><br>
         <button ng-click="deleteCancel(stock.symbol)" class="btn btn-warning btn-xs">Keep</button><button ng-click="deleteConfirm(stock.symbol)" class="btn btn-danger btn-xs">Delete</a></div>
       </div>
+    </div>
+    
+    <div class="col-md-12 footer text-center">
+        <div class="col-md-12">
+          <h4>Instructions.</h4>
+          <p><small>Add stocks by entering a stock symbol (e.g. GOOGL, AAPL, AMZN, EBAY).</small></p>
+          <p><small>Remove stocks by clicking 'x' on the stock item you want to remove.</small></p>
+        </div>
+        <div class="col-md-12">
+          <h4>About.</h4>
+          <p><small>Built by codemzy.</p>
+          <p><a href="https://www.twitter.com/codemzy" target="_blank"><i class="fa fa-twitter"></i> Twitter</a> | 
+          <a href="https://github.com/codemzy" target="_blank"><i class="fa fa-github"></i> GitHub</a> | 
+          <i class="fa fa-th"></i> Portfolio<br><br></small></p>
+        </div>
     </div>
     
     
