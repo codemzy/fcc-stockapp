@@ -37,6 +37,12 @@
         </form>
     </div>
     
+    <div class="col-md-12" ng-if="loading">
+      <div class="jumbotron text-center">
+        <h3><i class="fa fa-refresh fa-5x fa-spin"></i><br>Loading Stock Data...</h3>
+      </div>
+    </div>
+    
     <div class="col-md-3 col-sm-6" ng-repeat="stock in stocks">
       <div class="well text-center">
         <button type="button" ng-click="deleteRequest(stock.symbol)" class="close"><i class="fa fa-times"></i></button><br>

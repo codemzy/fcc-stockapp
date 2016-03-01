@@ -3,7 +3,7 @@ body {
     color: #fff;
 }
 
-.well {
+.well, .jumbotron {
     color: #6C7A89;
 }
 
@@ -15,6 +15,27 @@ body {
 
 .chart-wrap {
     margin-bottom: 10px;
+}
+
+.chart-legend li span{
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+
+ul.line-legend {
+    list-style-type: none;
+    font-size: 22px;
+    -webkit-padding-start: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+ul.line-legend li {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .btn-add {

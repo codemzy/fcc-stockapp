@@ -3,10 +3,10 @@
 angular.module('StocksRockApp', [])
 
     .controller('index', ['$scope', 'stock', function($scope, stock) {
-        $scope.stocks = [{ symbol: "Loading...", name: "Loading..."}];
+        $scope.stocks = [];
         $scope.socket = io();
         $scope.help = false;
-        $scope.stockData = [];
+        $scope.loading = true;
         // CLEAR HELP IF WARNING CLOSED
         $scope.closeHelp = function() {
             $scope.help = false;
@@ -23,6 +23,7 @@ angular.module('StocksRockApp', [])
         };
         var ctx = document.getElementById("stockChart").getContext("2d");
         var stocksRockChart = new Chart(ctx).Line(chartData, options);
+        document.getElementById('stockChart-legend').innerHTML = stocksRockChart.generateLegend();
         // GET NAMES OF STOCKS IN DB
         stock.getStock().success(function(data) {
          $scope.stocks = data.name;
@@ -42,10 +43,11 @@ angular.module('StocksRockApp', [])
                 pointHighlightFill: "#fff",
                 data: arrData
              };
-             $scope.stockData.push(obj);
              chartData.datasets.push(obj);
          }
+        $scope.loading = false;
         stocksRockChart = new Chart(ctx).Line(chartData, options);
+        document.getElementById('stockChart-legend').innerHTML = stocksRockChart.generateLegend();
         });
         // ADD STOCK FUNCTION
         $scope.addStock = function() {
@@ -80,7 +82,6 @@ angular.module('StocksRockApp', [])
         $scope.socket.on('messages', function (data) {
             $scope.$apply(function() {
                 $scope.stocks.push({ symbol: data.symbol, name: data.name });
-                $scope.stockData[data.symbol] = data.data;
                 // update the chart
                 var colour = randomColor();
                 var arrData = [];
