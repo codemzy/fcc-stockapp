@@ -27,9 +27,8 @@
         </div>
         <form>
             <div class="form-group">
-              <label class="control-label">Add stocks and update chart:</label>
-              <div class="input-group">
-                <input ng-model="newStockSymbol" name="new-stock" type="text" class="form-control" placeholder="Stock code...">
+              <div class="input-group" data-toggle="tooltip" data-placement="top" title="Add stock symbol to add a new stock item and update chart">
+                <input ng-model="newStockSymbol" name="new-stock" type="text" class="form-control" placeholder="Stock code..." />
                 <span class="input-group-btn">
                   <input type="submit" ng-click="addStock()" id="submitStock" class="btn btn-block btn-add" value="Add Stock" />
                 </span>

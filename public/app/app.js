@@ -171,4 +171,14 @@ angular.module('StocksRockApp', [])
             responsive: true,
             maintainAspectRatio: false
         };
+        // initialise tooltip
+        $(document).ready(function(){
+            $('[data-toggle=tooltip]').hover(function(){
+                // on mouseenter
+                $(this).tooltip('show');
+            }, function(){
+                // on mouseleave
+                $(this).tooltip('hide');
+            });
+        });
     }]);
