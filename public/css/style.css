@@ -14,12 +14,18 @@ body {
 }
 
 .btn-add {
-    background-color: #D35400;
+    background-color: #BDC3C7;
 }
 
 .btn-add:hover {
-    background-color: #F9690E;
+    background-color: #DADFE1;
     color: #ffffff;
+}
+
+.btn-add:focus {
+    background-color: #BDC3C7;
+    color: #ffffff;
+    outline: none;
 }
 
 .btn-xs {

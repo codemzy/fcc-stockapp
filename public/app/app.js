@@ -68,8 +68,7 @@ angular.module('StocksRockApp', [])
              $scope.help = false;
          });
          stock.addStock(newStock).error(function(error) {
-             $scope.stockName = error;
-             $scope.stockData = error;
+             $scope.help = "Not a valid stock symbol";
          });
         };
         // DO SOMETHING WHEN DATA ADD EMITTED FROM SERVER
