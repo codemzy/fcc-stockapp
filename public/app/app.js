@@ -100,6 +100,7 @@ angular.module('StocksRockApp', [])
                 };
                 chartData.datasets.push(obj);
                 stocksRockChart = new Chart(ctx).Line(chartData, options);
+                document.getElementById('stockChart-legend').innerHTML = stocksRockChart.generateLegend();
             });
         });
         // DELETE STOCK FUNCTION
@@ -131,6 +132,7 @@ angular.module('StocksRockApp', [])
                         $scope.stocks.splice(i, 1);
                         chartData.datasets.splice(i, 1);
                         stocksRockChart = new Chart(ctx).Line(chartData, options);
+                        document.getElementById('stockChart-legend').innerHTML = stocksRockChart.generateLegend();
                     }
                 }
             });
